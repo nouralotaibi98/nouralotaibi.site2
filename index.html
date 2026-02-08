@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1, viewport-fit=cover" />
+  <title>قسم كفاءة الطاقة | وزارة الكهرباء والماء والطاقة المتجددة</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary: #0b5fa8;
+      --primary-2:#0a4f8a;
+      --bg: #f6f9fc;
+      --card: #ffffff;
+      --text: #12212f;
+      --muted:#5a6b7b;
+      --border:#e6edf5;
+      --shadow: 0 10px 30px rgba(10, 40, 70, .08);
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: "Cairo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 420px at 50% 0%, rgba(11,95,168,.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.85;
+      -webkit-text-size-adjust: 100%;
+      overscroll-behavior: none;
+    }
+
+    .container{
+      width:min(1100px, calc(100% - 32px));
+      margin-inline:auto;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:rgba(246,249,252,.90);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+    }
+
+    .logo-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      min-width: 320px;
+    }
+    .header-logo{
+      width: clamp(220px, 30vw, 380px);
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 18px rgba(10,40,70,.12));
+      border-radius: 12px;
+    }
+
+    .title-wrap{
+      flex:1;
+      text-align:center;
+      padding:6px 12px;
+    }
+
+    .title{
+      margin:0;
+      font-size: clamp(18px, 3.2vw, 30px);
+      font-weight:900;
+      color:var(--primary);
+      letter-spacing:.2px;
+    }
+
+    main{ padding:28px 0 60px; }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:20px 22px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .section-title{
+      margin:0 0 6px;
+      font-size:18px;
+      font-weight:900;
+      color:var(--primary-2);
+    }
+    .section-text{
+      margin:0;
+      color:var(--text);
+      font-weight:700;
+    }
+
+    .actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:22px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid rgba(11,95,168,.25);
+      background: linear-gradient(180deg, rgba(11,95,168,.10), rgba(11,95,168,.04));
+      color:var(--primary-2);
+      border-radius: 14px;
+      padding:12px 16px;
+      font-weight:900;
+      cursor:pointer;
+      min-width: 240px;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      box-shadow: 0 10px 20px rgba(11,95,168,.08);
+      touch-action: manipulation;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn:active{ transform: translateY(0px); box-shadow:none; }
+
+    .btn.primary{
+      background: linear-gradient(180deg, var(--primary), var(--primary-2));
+      border-color: rgba(255,255,255,.25);
+      color:#fff;
+    }
+    .btn.ghost{
+      background:#fff;
+      border:1px solid var(--border);
+      color:var(--muted);
+      box-shadow:none;
+    }
+    .btn.small{
+      min-width:auto;
+      padding:10px 14px;
+      border-radius: 12px;
+    }
+
+    /* modal */
+    .backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(10, 25, 40, .55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:50;
+      overscroll-behavior: contain;
+    }
+    .backdrop.open{ display:flex; }
+
+    .modal{
+      width:min(860px, 100%);
+      background:var(--card);
+      border-radius: 20px;
+      border:1px solid var(--border);
+      box-shadow: 0 22px 60px rgba(0,0,0,.25);
+      overflow:hidden;
+      transform: translateY(6px);
+      animation: pop .14s ease-out forwards;
+      max-height: calc(100dvh - 36px);
+      display:flex;
+      flex-direction:column;
+    }
+    @keyframes pop { to { transform: translateY(0); } }
+
+    .modal-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(11,95,168,.10), transparent);
+      flex: 0 0 auto;
+    }
+    .modal-title{
+      margin:0;
+      font-size:18px;
+      font-weight:1000;
+      color:var(--primary-2);
+    }
+    .close{
+      border:1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+      border-radius: 12px;
+      padding:8px 10px;
+      font-weight:1000;
+      color:var(--muted);
+      touch-action: manipulation;
+    }
+
+    .modal-body{
+      padding:14px 16px 18px;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      flex: 1 1 auto;
+    }
+
+    .progress{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--border);
+      border-radius: 14px;
+      background:#fbfdff;
+      margin-bottom:12px;
+    }
+    .progress strong{ color:var(--primary-2); font-weight:1000; }
+    .bar{
+      flex:1;
+      height:10px;
+      border-radius:999px;
+      background:#eaf2fb;
+      overflow:hidden;
+      border:1px solid #e3edf9;
+    }
+    .bar > i{
+      display:block;
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(11,95,168,.55), rgba(11,95,168,1));
+      border-radius:999px;
+      transition: width .25s ease;
+    }
+
+    .qwrap{
+      border:1px solid var(--border);
+      border-radius: 18px;
+      padding:14px 14px;
+      background:#fff;
+    }
+    .qtitle{
+      margin:0 0 8px;
+      font-size:16px;
+      font-weight:1000;
+      color:#17324a;
+      white-space:pre-wrap;
+    }
+
+    .options{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .optbtn{
+      text-align:right;
+      width:100%;
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 16px;
+      padding:12px 12px;
+      cursor:pointer;
+      font-weight:900;
+      color:#233a50;
+      transition: transform .10s ease, border-color .10s ease, box-shadow .10s ease, background .10s ease, opacity .10s ease;
+      white-space:pre-wrap;
+      touch-action: manipulation;
+    }
+    .optbtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(11,95,168,.35);
+      box-shadow: 0 12px 18px rgba(11,95,168,.10);
+    }
+    .optbtn.selected{
+      border-color: rgba(11,95,168,.65);
+      box-shadow: 0 14px 22px rgba(11,95,168,.14);
+      background: linear-gradient(180deg, rgba(11,95,168,.10), rgba(11,95,168,.03));
+    }
+    .optbtn:disabled{
+      cursor: not-allowed;
+      opacity: .78;
+      transform:none !important;
+      box-shadow:none !important;
+    }
+
+    .feedback{
+      margin-top:12px;
+      border:1px dashed rgba(11,95,168,.35);
+      background: rgba(11,95,168,.06);
+      border-radius: 16px;
+      padding:12px 12px;
+      display:none;
+      white-space:pre-wrap;
+      font-weight:800;
+      color:#21415c;
+    }
+    .feedback.show{ display:block; }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(11,95,168,.30);
+      background:#fff;
+      color:var(--primary-2);
+      font-weight:1000;
+      font-size:16px;
+      margin-bottom:10px;
+    }
+
+    .modal-footer{
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      padding:12px 16px 16px;
+      border-top:1px solid var(--border);
+      flex-wrap:wrap;
+      flex: 0 0 auto;
+      background:#fff;
+    }
+    .footer-left, .footer-right{ display:flex; gap:10px; align-items:center; }
+
+    .result-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+      align-items:start;
+    }
+
+    .donut-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:6px 0 2px;
+    }
+    .donut{
+      width:220px;
+      height:220px;
+      display:block;
+    }
+    .donut text{
+      font-family: "Cairo", sans-serif;
+      font-weight:1000;
+      fill: var(--primary-2);
+    }
+    .score-big{ font-size: 22px; }
+    .score-small{ font-size: 12px; fill: var(--muted); font-weight:900; }
+
+    .stroke-bg{ stroke: #eaf2fb; }
+    .stroke-fg{ stroke: var(--primary); stroke-linecap: round; }
+    .stroke-fg{
+      transition: stroke-dashoffset 900ms cubic-bezier(.2,.8,.2,1);
+      filter: drop-shadow(0 10px 16px rgba(11,95,168,.18));
+    }
+
+    .result-box{
+      border:1px solid var(--border);
+      border-radius: 18px;
+      padding:14px 14px;
+      background:#fbfdff;
+      white-space:pre-wrap;
+    }
+    .result-box h4{
+      margin:0 0 8px;
+      font-weight:1000;
+      color:#17324a;
+      font-size:16px;
+    }
+    .result-box p{
+      margin:0;
+      color:#294057;
+      font-weight:800;
+      white-space:pre-wrap;
+    }
+
+    footer{
+      margin-top:16px;
+      color:var(--muted);
+      text-align:center;
+      font-weight:800;
+      padding:14px 0 30px;
+    }
+
+    @media (min-width: 820px){
+      .result-grid{ grid-template-columns: 320px 1fr; align-items:center; }
+    }
+
+    /* ===== تحسينات الموبايل بشكل واضح ===== */
+    @media (max-width: 640px){
+      .container{ width: calc(100% - 20px); }
+
+      .topbar{
+        flex-direction: column;
+        align-items: center;
+        padding:12px 0;
+      }
+      .logo-wrap{
+        min-width:auto;
+        justify-content:center;
+      }
+      .title-wrap{ text-align:center; padding:0; }
+      .title{ font-size: 22px; }
+
+      .card{ padding:16px; border-radius: 16px; }
+
+      .actions{ gap:10px; }
+      .btn{ min-width: 100%; padding:14px 14px; }
+
+      .backdrop{ padding:10px; }
+      .modal{
+        width: 100%;
+        border-radius: 16px;
+        max-height: calc(100dvh - 20px);
+      }
+      .modal-body{ padding:12px 12px 16px; }
+      .progress{ flex-wrap:wrap; }
+      .optbtn{ padding:14px 12px; font-size: 16px; }
+
+      .modal-footer{
+        gap:10px;
+        justify-content:space-between;
+      }
+      .footer-right{ width:100%; justify-content:space-between; }
+      .footer-left{ width:100%; justify-content:space-between; }
+      .btn.small{ flex:1; justify-content:center; }
+      .btn.ghost.small{ flex:1; }
+      .btn.primary.small{ flex:1; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="topbar">
+        <div class="logo-wrap" aria-label="شعار الإدارة">
+          <img class="header-logo" src="assets/header-logo.jpg" alt="إدارة الطاقة المتجددة وكفاءة الطاقة">
+        </div>
+
+        <div class="title-wrap">
+          <h1 class="title">قسم كفاءة الطاقة</h1>
+        </div>
+
+        <div class="logo-wrap" aria-hidden="true" style="opacity:0; pointer-events:none;">
+          <img class="header-logo" src="assets/header-logo.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card" aria-label="نبذة القسم">
+      <div class="grid">
+        <div>
+          <h2 class="section-title">رؤيتنا :</h2>
+          <p class="section-text">
+            تحقيق الاستخدام الأمثل للطاقة عن طريق رفع كفاءة الطاقة لتعزيز التنمية المستدامة.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="section-title">رسالتنا:</h2>
+          <p class="section-text">
+            رفع كفاءة الطاقة في الدولة من خلال التعاون مع الجهات المعنية وتطوير حلول وسياسات مبتكرة تعزز رفع كفاءة الاستهلاك،
+            وتدعم الاستدامة البيئية، وتحقق أمن الطاقة والتنمية المستدامة.
+          </p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="btnSurvey" type="button">
+          استبيان: قيّم عاداتك في استخدام الطاقة
+        </button>
+
+        <button class="btn" id="btnQuiz" type="button">
+          كويز: شنو تعرف عن كفاءة الطاقة
+        </button>
+      </div>
+    </section>
+
+    <footer>
+      © قسم كفاءة الطاقة — وزارة الكهرباء والماء والطاقة المتجددة — دولة الكويت
+    </footer>
+  </main>
+
+  <!-- Modal -->
+  <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document" aria-label="نافذة منبثقة">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">عنوان</h3>
+        <button class="close" id="btnClose" type="button" aria-label="إغلاق">✕</button>
+      </div>
+
+      <div class="modal-body" id="modalBody"></div>
+
+      <div class="modal-footer" id="modalFooter">
+        <div class="footer-left">
+          <button class="btn ghost small" id="btnPrev" type="button">السابق</button>
+        </div>
+        <div class="footer-right">
+          <button class="btn small" id="btnCancel" type="button">إلغاء</button>
+          <button class="btn primary small" id="btnNext" type="button">التالي</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========= الاستبيان =========
+    const survey = {
+      title: "قيّم عاداتك",
+      questions: [
+        {
+          q: "١- إذا كانت أشعة الشمس مباشرة على الواجهة، شنو الإجراء الأفضل؟",
+          options: ["أزيد التبريد","تظليل و عزل","أفتح الباب","أغيّر لون الأثاث"],
+          correct: 1,
+          explanation: "توضيح: تقليل الحرارة الداخلة (بالتظليل أو العزل) يخفف الحمل على المكيّف.",
+          note: "ملاحظة: زيادة التبريد تعالج النتيجة ولا تحل المشكلة مما يسبب ارتفاع في الفاتورة."
+        },
+        {
+          q: "٢-شنو قرارك مع الأجهزة القديمة عالية الاستهلاك؟",
+          options: ["أحتفظ فيها","أبدّلها بجهاز أكفأ إذا أمكن","أستخدمها أكثر","أصلحها بدون تفكير بالكفاءة"],
+          correct: 1,
+          explanation: "استبدال الأجهزة القديمة بأجهزة ذات كفاءة عالية يقلل الاستهلاك بشكل ملحوظ.",
+          note: ""
+        },
+        {
+          q: "٣- أي أسلوب أقرب لعادتك اليومية؟",
+          options: ["أجهزة ذات كفاءة عالية+ تشغيل واعي","أجهزة ذات كفاءة عالية فقط","تشغيل واعي فقط","ما أغيّر شي"],
+          correct: 0,
+          explanation: "توضيح: أفضل نتيجة تتحقق من الجمع بين التقنية الجيدة والسلوك الصحيح.",
+          note: "ملاحظة: الاعتماد على عامل واحد يعطي نتيجة أقل."
+        },
+        {
+          q: "٤- بالأماكن اللي ما تستخدم بشكل مستمر (مثل المخازن أو السلالم)، شنو الحل الأقرب للكفاءة؟",
+          options: ["تشغيل الإضاءة طوال الوقت","الاعتماد على التذكير اليدوي"," تركيب motion sensors/ Occupancy Sensors للإضاءة","زيادة عدد المصابيح"],
+          correct: 2,
+          explanation: "توضيح :حساسات الحركة تشغّل الإضاءة فقط عند وجود أشخاص، فتمنع الهدر في الأماكن قليلة الاستخدام.",
+          note: "ملاحظة: يفض استخدام الmotion sensors للممرات اما بالنسبه ل occupancy sensors للمكاتب"
+        },
+        {
+          q: "٥- اذا تبي ترفع كفاءة الطاقة في بيتك:",
+          options: ["تسكر الاضاءه","تركب LED","استخدام لمبات قوية جدًا في جميع الغرف"],
+          correct: 1,
+          explanation: "إطفاء الإضاءة في الأماكن غير المستخدمة يساهم في خفض الاستهلاك غير الضروري، انما استبدالها بمصابيح موفرة للطاقة مثل ال LED يعتبر من ممارسات رفع كفاءة الطاقة.",
+          note: ""
+        },
+        {
+          q: "٦-عند اختيارك للأجهزة الكهربائية، شنو القرار الأقرب لعادتك؟",
+          options: ["أختار الأرخص بدون النظر للكفاءة","أركّز على الحجم أو القوة فقط","أراجع بطاقة كفاءة الطاقة وأختار الأعلى كفاءة","أختار حسب الشكل أو العلامة التجارية"],
+          correct: 2,
+          explanation: "توضيح: بطاقة كفاءة الطاقة توضح استهلاك الجهاز للكهرباء وتساعدك تختار جهاز أوفر في التشغيل، يعني توفر على الفاتورة وتحافظ على الطاقة.",
+          note: ""
+        },
+        {
+          q: "٧-شنو رأيك بالأنظمة الذكية في المباني؟",
+          options: ["كماليات فقط","للراحة أكثر من الكفاءة","أداة فعّالة لرفع كفاءة الطاقة","ما لها تأثير"],
+          correct: 2,
+          explanation: "توضيح:\nالتحكم الذكي يقلّل التشغيل غير الضروري.",
+          note: ""
+        },
+        {
+          q: "٨- قبل ما تشتري المكيف شنو القرار الأقرب اللي تسويه ؟",
+          options: ["تحديد السعة المناسبة لمساحة الغرفة.","اشوف سعر الجهاز .","بلد التصنيع.","لون الجهاز ."],
+          correct: 0,
+          explanation: "توضيح : تحديد السعة المناسبة لمساحة الغرفة تضمن مكيف يناسب احتياجك و يحقق الاستخدام الأمثل للطاقة.",
+          note: ""
+        },
+        {
+          q: "٩- تتوقع ليش مانقولك ارفع درجة حرارة التكييف عشان ترفع من كفاءة الطاقة؟",
+          options: ["نحبك تكون حران","لان التوفير لازم يكون على حسابك","لان كفاءة الطاقة تعتمد على الاجهزه عالية الكفاءة مو تعذيب المستخدم","لان الكفاءة تعني تقليل الراحه"],
+          correct: 2,
+          explanation: "الهدف من كفاة الطاقة هو تقليل الاستهلاك من غير تقليل راحة الفرد فمن البداية احرض على انك تختار اجهزه موفره للطاقة بدون ما تأثر على راحتك الشخصية",
+          note: ""
+        },
+        {
+          q: "١٠- تفكر تحط ثرموستات ذكي للتحكم بدرجات حرارة المكيف؟",
+          options: ["ماله داعي","اي راح يساعدني اوفر بالطاقة الكهربائية","ماحب التكنولوجيا","شنو فايدته؟"],
+          correct: 1,
+          explanation: "الثرموستات الذكي يساعدك تتحكم بدرجات حرارة التكييف حسب احتياجك والأوقات اللي تكون فيها بالبيت، وهذا يساهم في رفع كفاءة الجهاز وتطويل عمره الافتراضي",
+          note: ""
+        }
+      ]
+    };
+
+    // ========= الكويز =========
+    const quiz = {
+      title: "شنو تعرف عن كفاءة الطاقة",
+      questions: [
+        {
+          q: "١-إذا فاتورة بيتك الشهرية للكهرباء ٥٠ دينار، جم تتوقع مبلغ الدعم الحكومي تقريباً لنفس الاستهلاك؟",
+          options: ["١٠٠","٤٠٠","٥٠٠","٩٠٠"],
+          correct: 3,
+          correctFeedback:
+`انصدمت صح! 
+
+لان الكهرباء مدعومة للقطاع السكني مثل بيتكم انت تدفع ٢ فلس لكن التكلفة النهائية لانتاج كل كيلوواط ساعة يعادل ٤١ فلس
+
+وهني يبدأ دورنا عن طريق رفع كفاءة الطاقة من البداية لتحسين الاستهلاك من غير ما نقلل راحة الفرد`,
+          wrongFeedback:
+`مبلغ الدعم الحكومي تقريباً لنفس الاستهلاك يوصل حوالَي ٩٠٠ دينار.
+
+لان الكهرباء مدعومة للقطاع السكني مثل بيتكم انت تدفع ٢ فلس لكن التكلفة النهائية لانتاج كل كيلوواط ساعة يعادل ٤١ فلس
+
+وهني يبدأ دورنا عن طريق رفع كفاءة الطاقة من البداية لتحسين الاستهلاك من غير ما نقلل راحة الفرد`
+        },
+        {
+          q: "٢- شنو يعني تصنيف كفاءة الطاقة ( مثل A+,A++)؟",
+          options: ["أ) حجم الجهاز","ب) سرعة الجهاز","ج) كمية الطاقة اللي يستهلكها الجهاز","د) مستوى الضوضاء"],
+          correct: 2,
+          correctFeedback: "صح 👏🏻 ، تصنيف كفاءة الطاقة يبيّن مقدار استهلاك الجهاز للكهرباء، وكل ما كان التصنيف أعلى كان الجهاز أوفر في التشغيل ويوفر على الفاتورة.",
+          wrongFeedback: "غلط ، تصنيف كفاءة الطاقة يبيّن استهلاك الكهرباء فقط، وليس حجم الجهاز أو سرعته أو صوته."
+        },
+        {
+          q: "٣- لما تشتري جهاز كهربائي جديد، شنو أهم شي تركز عليه عشان توفر كهرباء؟",
+          options: ["أ) الشكل","ب) بطاقة كفاءة الطاقة","ج) الحجم","د) السعر"],
+          correct: 1,
+          correctFeedback: "صح 👏🏻 ، بطاقة كفاءة الطاقة توضح استهلاك الجهاز للكهرباء وتساعدك تختار جهاز أوفر في التشغيل، يعني توفر على الفاتورة وتحافظ على الطاقة.",
+          wrongFeedback: "غلط ، الشكل أو الحجم أو السعر ما يحددون استهلاك الكهرباء، بطاقة كفاءة الطاقة هي المؤشر الحقيقي للتوفير."
+        },
+        {
+          q: "٤- إذا كان عندك جهازين قدرتهم 1000 واط، هل هذا يعني إنهم نفس الكفاءة؟",
+          options: ["نعم، لأن القدرة نفسها","نعم، لأن استهلاكهم متساوي","لا، الكفاءة تعتمد على الأداء مقابل الطاقة المستهلكة","يعتمد على لون الجهاز"],
+          correct: 2,
+          correctFeedback: "ملاحظه : الكفاءة تقيس شكثر أداء يعطي الجهاز مقابل الطاقة، مو بس رقم الواط.",
+          wrongFeedback: "ملاحظه : الكفاءة تقيس شكثر أداء يعطي الجهاز مقابل الطاقة، مو بس رقم الواط."
+        },
+        {
+          q: "٥-شنو.اكثر واجهة في المبنى اللي يُفضَّل تقليل استخدام الزجاج فيها لتخفيف دخول الحرارة؟",
+          options: ["الشمالية","⁠الجنوبية","⁠الشرقية","⁠الغربية"],
+          correct: 1,
+          correctFeedback: "صح 👏🏻 ، الواجهة الجنوبية تتعرّض للشمس بشكل مباشر، وزيادة الزجاج فيها ترفع دخول الحرارة.",
+          wrongFeedback: "غلط ، الواجهات الأقل تعرّضًا للشمس ما تدخل حرارة مثل الجنوبية."
+        },
+        {
+          q: "٦- أي مساحة  يُنصح بعزلها حرارياً لتقليل التأثير الحراري على المبنى؟",
+          options: ["السطح","⁠الجدران الداخلية","⁠المشربيات","⁠جميع ما سبق صحيح"],
+          correct: 0,
+          correctFeedback: "صح 👏🏻، السطح هو أكثر جزء يتعرّض للشمس، وعزله يقلّل الحرارة الداخلة للمبنى بشكل كبير.",
+          wrongFeedback: "غلط ، العزل الحراري يكون للأجزاء المعرّضة للخارج، وليس للمساحات الداخلية."
+        },
+        {
+          q: "٧- شنو أكثر شي يقلل استهلاك الكهرباء: العزل الحراري ولا كفاءة المكيّف؟",
+          options: ["أ) العزل مهم لكنه مو العامل الأساسي","ب) كفاءة المكيّف أهم من العزل","ج) الاثنين مهمين بس العزل تأثيره أكبر","د) الاثنين مهمين بنفس الدرجة"],
+          correct: 2,
+          correctFeedback:
+`صح 👏🏻، العزل يقلل الحمل من الأساس ، يعني بدل ما تكبّر المكيّف عشان يعالج المشكلة، أنت تمنع المشكلة من البداية.`,
+          wrongFeedback:
+`غلط ، تحسين الأجهزة بدون عزل يعالج النتيجة مو السبب.`
+        },
+        {
+          q: "٨- هل مكيف الـ VFD / Inverter فعلاً يقلل استهلاك الكهرباء؟",
+          options: ["أ) إي، يوفر تقريبًا 20%–40%","ب) إي، بس أقل من 20%","ج) الفرق بسيط جدًا","د) لا، ما يوفر كهرباء"],
+          correct: 0,
+          correctFeedback:
+`صح 👏🏻 ، مكيّف الـ Inverter يضبط سرعته حسب الحاجة، فيوفّر تقريبًا 20%–40% من الكهرباء.
+و تدري ان في قرار من الوزارة لجميع المباني الجديدة تركب inverter MSU`,
+          wrongFeedback:
+`مكيّف الـ Inverter يضبط سرعته حسب الحاجة، فيوفّر تقريبًا 20%–40% من الكهرباء.
+و تدري ان في قرار من الوزارة لجميع المباني الجديدة تركب inverter MSU`
+        },
+        {
+          q: "٩- شلون الأنظمة الذكية تقلل استهلاك الكهرباء في المباني؟",
+          options: ["أ) تضبط التشغيل حسب الحاجة","ب) تحسن أداء الأجهزة بس","ج) تطفئ الأنظمة بشكل عشوائي","د) بس تراقب بدون تأثير"],
+          correct: 0,
+          correctFeedback: "صح 👏🏻 ، الأنظمة الذكية تشغّل الأجهزة وقت الحاجة فقط، فتقلّل الهدر في الطاقة.",
+          wrongFeedback: "غلط ، التوفير يكون من التحكم الذكي، مو من الإطفاء العشوائي أو المراقبة فقط."
+        },
+        {
+          q: "١٠- شنو اكثر شي مهم:",
+          options: ["١- اغير سلوكي واحافظ على الطاقة","٢-ارفع كفاءة الطاقة","٣-اركب طاقة متجددة","٤- جميع ما سبق"],
+          correct: 3,
+          correctFeedback:
+`جميع ماسبق لان كل واحد يكمل الثاني و بالبداية لازم اغير من سلوكي عشان احافظ على الطاقة الكهربائية و ارفع كفاءة الطاقة لضمان الاستخدام الامثل لها وبالنهاية اركب الطاقة المتجددة بأقل التكاليف`,
+          wrongFeedback:
+`جميع ماسبق لان كل واحد يكمل الثاني و بالبداية لازم اغير من سلوكي عشان احافظ على الطاقة الكهربائية و ارفع كفاءة الطاقة لضمان الاستخدام الامثل لها وبالنهاية اركب الطاقة المتجددة بأقل التكاليف`
+        }
+      ]
+    };
+
+    const backdrop = document.getElementById("backdrop");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalBody  = document.getElementById("modalBody");
+    const modalFooter = document.getElementById("modalFooter");
+
+    const btnSurvey = document.getElementById("btnSurvey");
+    const btnQuiz = document.getElementById("btnQuiz");
+    const btnClose = document.getElementById("btnClose");
+    const btnCancel = document.getElementById("btnCancel");
+    const btnPrev = document.getElementById("btnPrev");
+    const btnNext = document.getElementById("btnNext");
+
+    let active = null;
+    let step = 0;
+    let answers = [];
+    let locked = [];
+
+    function openModal(payload){
+      active = payload;
+      step = 0;
+      answers = new Array(active.questions.length).fill(null);
+      locked  = new Array(active.questions.length).fill(false);
+
+      modalTitle.textContent = payload.title;
+      renderStep();
+
+      backdrop.classList.add("open");
+      backdrop.setAttribute("aria-hidden", "false");
+      btnClose.focus();
+
+      // منع سكرول الصفحة خلف المودال على الموبايل
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(){
+      backdrop.classList.remove("open");
+      backdrop.setAttribute("aria-hidden", "true");
+      active = null;
+
+      document.body.style.overflow = "";
+    }
+
+    function stripLeadingWrong(text){
+      if (!text) return text;
+      return String(text).replace(/^\s*غلط\s*[\.،:!؟…]*\s*/u, "");
+    }
+
+    function showFeedback(item, chosenIdx){
+      const fb = document.getElementById("feedback");
+      const isQuizMode = Object.prototype.hasOwnProperty.call(item, "correctFeedback");
+
+      if (isQuizMode){
+        const isCorrect = (chosenIdx === item.correct);
+        const label = isCorrect ? "صح" : "غلط";
+        let text = isCorrect ? (item.correctFeedback || "") : (item.wrongFeedback || "");
+        if (!isCorrect) text = stripLeadingWrong(text);
+
+        fb.innerHTML = `<div class="status">${label}</div>\n${escapeHtml(text)}`;
+        fb.classList.add("show");
+        return;
+      }
+
+      const parts = [];
+      if ((item.explanation || "").trim()) parts.push(item.explanation);
+      if ((item.note || "").trim()) parts.push(item.note);
+
+      if (parts.length === 0){
+        fb.classList.remove("show");
+        fb.textContent = "";
+        return;
+      }
+
+      fb.textContent = parts.join("\n\n");
+      fb.classList.add("show");
+    }
+
+    function renderStep(){
+      const total = active.questions.length;
+
+      if (step >= total){
+        renderResult();
+        return;
+      }
+
+      const item = active.questions[step];
+      const progressPct = Math.round(((step) / total) * 100);
+
+      modalFooter.style.display = "flex";
+      btnPrev.disabled = (step === 0);
+      btnNext.textContent = (step === total - 1) ? "إنهاء" : "التالي";
+      btnNext.disabled = (answers[step] === null);
+
+      modalBody.innerHTML = `
+        <div class="progress">
+          <strong>سؤال ${step + 1} من ${total}</strong>
+          <div class="bar"><i id="barFill"></i></div>
+          <span style="color:var(--muted); font-weight:900;">${progressPct}%</span>
+        </div>
+
+        <div class="qwrap">
+          <h4 class="qtitle">${escapeHtml(item.q)}</h4>
+          <div class="options" id="options"></div>
+          <div class="feedback" id="feedback"></div>
+        </div>
+      `;
+
+      document.getElementById("barFill").style.width = `${progressPct}%`;
+
+      const optionsDiv = document.getElementById("options");
+      item.options.forEach((opt, idx) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "optbtn";
+        b.textContent = opt;
+
+        if (answers[step] === idx) b.classList.add("selected");
+        if (locked[step]) b.disabled = true;
+
+        b.addEventListener("click", () => {
+          if (locked[step]) return;
+
+          answers[step] = idx;
+          locked[step] = true;
+
+          [...optionsDiv.querySelectorAll(".optbtn")].forEach(x => x.classList.remove("selected"));
+          b.classList.add("selected");
+          [...optionsDiv.querySelectorAll(".optbtn")].forEach(x => x.disabled = true);
+
+          btnNext.disabled = false;
+          showFeedback(item, idx);
+        });
+
+        optionsDiv.appendChild(b);
+      });
+
+      if (answers[step] !== null){
+        showFeedback(item, answers[step]);
+        if (locked[step]){
+          [...optionsDiv.querySelectorAll(".optbtn")].forEach(x => x.disabled = true);
+        }
+      }
+    }
+
+    function computePct(){
+      const total = active.questions.length;
+      let correctCount = 0;
+      for (let i=0;i<total;i++){
+        if (answers[i] === active.questions[i].correct) correctCount++;
+      }
+      return Math.round((correctCount / total) * 100);
+    }
+
+    function resultTextByPct(pct){
+      if (pct >= 90){
+        return {
+          title: "مستوى ممتاز جدًا",
+          body:
+`عاداتك في استخدام الطاقة ممتازة جدًا 👏
+واضح إنك تجمع بين الاختيار الصحيح للأجهزة والسلوك الواعي في الاستخدام.
+بهالطريقة أنت تساهم في تقليل الاستهلاك، تخفيف الأحمال، والمحافظة على الطاقة بدون ما تأثر على راحتك.`
+        };
+      }
+      if (pct >= 75){
+        return {
+          title: "مستوى ممتاز",
+          body:
+`عاداتك في كفاءة الطاقة ممتازة 👍
+عندك وعي واضح في كثير من الممارسات، ومع بعض التحسينات البسيطة تقدر توصل للاستخدام الأمثل للطاقة وتحقق توفير أكبر على المدى الطويل.`
+        };
+      }
+      if (pct >= 60){
+        return {
+          title: "مستوى جيد",
+          body:
+`عاداتك في كفاءة الطاقة جيدة، لكن في مجال للتطوير.
+تحسين بعض القرارات مثل اختيار الأجهزة الأكفأ أو تنظيم التشغيل راح يفرق بشكل واضح في تقليل الاستهلاك ورفع كفاءة الطاقة في بيتك.`
+        };
+      }
+      if (pct >= 40){
+        return {
+          title: "يحتاج تحسين",
+          body:
+`استخدامك للطاقة يحتاج بعض المراجعة.
+كثير من الممارسات اليومية ممكن تتعدل بسهولة بدون أي تأثير على راحتك، لكنها تساهم بشكل كبير في تقليل الهدر ورفع كفاءة الاستهلاك.`
+        };
+      }
+      return {
+        title: "بحاجة إلى وعي أكبر",
+        body:
+`مستوى كفاءة الطاقة عندك منخفض حاليًا.
+البداية تكون من خطوات بسيطة مثل اختيار الأجهزة الأعلى كفاءة وتنظيم الاستخدام، ومع الوقت راح تلاحظ فرق واضح في الاستهلاك والفاتورة بدون ما تقل راحتك.`
+      };
+    }
+
+    function renderResult(){
+      const pct = computePct();
+      const msg = resultTextByPct(pct);
+
+      const r = 78;
+      const c = 2 * Math.PI * r;
+      const dash = (pct / 100) * c;
+
+      modalFooter.style.display = "none";
+
+      modalBody.innerHTML = `
+        <div class="result-grid">
+          <div class="donut-wrap">
+            <svg class="donut" viewBox="0 0 200 200" aria-label="النتيجة">
+              <circle cx="100" cy="100" r="${r}" fill="none" stroke-width="16" class="stroke-bg"></circle>
+              <circle id="fg"
+                      cx="100" cy="100" r="${r}"
+                      fill="none" stroke-width="16"
+                      class="stroke-fg"
+                      transform="rotate(-90 100 100)"
+                      stroke-dasharray="${c}"
+                      stroke-dashoffset="${c}"></circle>
+
+              <text x="100" y="102" text-anchor="middle" class="score-big">
+                <tspan id="pctNum">0</tspan><tspan>%</tspan>
+              </text>
+              <text x="100" y="128" text-anchor="middle" class="score-small">النتيجة النهائية</text>
+            </svg>
+          </div>
+
+          <div class="result-box">
+            <h4>${escapeHtml(msg.title)}</h4>
+            <p>${escapeHtml(msg.body)}</p>
+
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn primary small" id="btnRestart" type="button">إعادة</button>
+              <button class="btn ghost small" id="btnDone" type="button">إغلاق</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const fg = document.getElementById("fg");
+      requestAnimationFrame(() => {
+        fg.style.strokeDashoffset = String(c - dash);
+      });
+
+      animateNumber("pctNum", 0, pct, 900);
+
+      document.getElementById("btnRestart").addEventListener("click", () => {
+        step = 0;
+        answers = new Array(active.questions.length).fill(null);
+        locked  = new Array(active.questions.length).fill(false);
+        renderStep();
+      });
+
+      document.getElementById("btnDone").addEventListener("click", closeModal);
+    }
+
+    function animateNumber(id, from, to, duration){
+      const el = document.getElementById(id);
+      const start = performance.now();
+      function tick(now){
+        const t = Math.min(1, (now - start) / duration);
+        const val = Math.round(from + (to - from) * (1 - Math.pow(1 - t, 3)));
+        el.textContent = String(val);
+        if (t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    btnSurvey.addEventListener("click", () => openModal(survey));
+    btnQuiz.addEventListener("click", () => openModal(quiz));
+
+    btnClose.addEventListener("click", closeModal);
+    btnCancel.addEventListener("click", closeModal);
+
+    btnPrev.addEventListener("click", () => {
+      if (!active) return;
+      if (step > 0){ step--; renderStep(); }
+    });
+
+    btnNext.addEventListener("click", () => {
+      if (!active) return;
+      if (answers[step] === null){
+        alert("اختاري إجابة قبل ما تكملين 🙏");
+        return;
+      }
+      step++;
+      renderStep();
+    });
+
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && backdrop.classList.contains("open")) closeModal();
+    });
+  </script>
+</body>
+</html>
