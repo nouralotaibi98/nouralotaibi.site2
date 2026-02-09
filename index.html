@@ -24,6 +24,7 @@
 
     *{ box-sizing:border-box; }
     html, body{ height:100%; }
+
     body{
       margin:0;
       font-family: "Cairo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -404,19 +405,12 @@
       .result-grid{ grid-template-columns: 320px 1fr; align-items:center; }
     }
 
-    /* ===== تحسينات الموبايل بشكل واضح ===== */
+    /* ===== تحسينات الموبايل (صغير) ===== */
     @media (max-width: 640px){
       .container{ width: calc(100% - 20px); }
 
-      .topbar{
-        flex-direction: column;
-        align-items: center;
-        padding:12px 0;
-      }
-      .logo-wrap{
-        min-width:auto;
-        justify-content:center;
-      }
+      .topbar{ flex-direction: column; align-items: center; padding:12px 0; }
+      .logo-wrap{ min-width:auto; justify-content:center; }
       .title-wrap{ text-align:center; padding:0; }
       .title{ font-size: 22px; }
 
@@ -426,24 +420,52 @@
       .btn{ min-width: 100%; padding:14px 14px; }
 
       .backdrop{ padding:10px; }
-      .modal{
-        width: 100%;
-        border-radius: 16px;
-        max-height: calc(100dvh - 20px);
-      }
+      .modal{ width: 100%; border-radius: 16px; max-height: calc(100dvh - 20px); }
       .modal-body{ padding:12px 12px 16px; }
       .progress{ flex-wrap:wrap; }
       .optbtn{ padding:14px 12px; font-size: 16px; }
 
-      .modal-footer{
-        gap:10px;
-        justify-content:space-between;
-      }
+      .modal-footer{ gap:10px; justify-content:space-between; }
       .footer-right{ width:100%; justify-content:space-between; }
       .footer-left{ width:100%; justify-content:space-between; }
       .btn.small{ flex:1; justify-content:center; }
       .btn.ghost.small{ flex:1; }
       .btn.primary.small{ flex:1; }
+    }
+
+    /* ===== التعديل المهم لشاشات طول (Portrait) حتى لو كانت عريضة ===== */
+    @media (orientation: portrait), (max-aspect-ratio: 4/5){
+      .container{ width: min(920px, calc(100% - 24px)); }
+
+      .topbar{
+        flex-direction: column;
+        align-items: center;
+        gap:10px;
+        padding:12px 0;
+      }
+      .logo-wrap{
+        min-width:auto;
+        justify-content:center;
+      }
+      /* نخفي العمود الوهمي اللي يسوي توسيط بالدسكتوب */
+      header .topbar > .logo-wrap[aria-hidden="true"]{
+        display:none !important;
+      }
+
+      .title-wrap{ padding:0; }
+      .title{ font-size: clamp(20px, 3.2vw, 30px); }
+
+      .actions{
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn{ min-width: 100%; }
+
+      .backdrop{ padding:12px; }
+      .modal{
+        width: 100%;
+        max-height: calc(100dvh - 24px);
+      }
     }
   </style>
 </head>
@@ -453,7 +475,7 @@
     <div class="container">
       <div class="topbar">
         <div class="logo-wrap" aria-label="شعار الإدارة">
-          <img class="header-logo" src="assets/header-logo.jpg" alt="إدارة الطاقة المتجددة وكفاءة الطاقة">
+          <img class="header-logo" src="assets/header-logo.jpg" alt="شعار">
         </div>
 
         <div class="title-wrap">
@@ -487,13 +509,8 @@
       </div>
 
       <div class="actions">
-        <button class="btn primary" id="btnSurvey" type="button">
-           قيّم عاداتك في استخدام الطاقة
-        </button>
-
-        <button class="btn" id="btnQuiz" type="button">
-           شنو تعرف عن كفاءة الطاقة
-        </button>
+        <button class="btn primary" id="btnSurvey" type="button">قيّم عاداتك في استخدام الطاقة</button>
+        <button class="btn" id="btnQuiz" type="button">شنو تعرف عن كفاءة الطاقة</button>
       </div>
     </section>
 
@@ -502,7 +519,6 @@
     </footer>
   </main>
 
-  <!-- Modal -->
   <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal" role="document" aria-label="نافذة منبثقة">
       <div class="modal-header">
@@ -525,7 +541,6 @@
   </div>
 
   <script>
-    // ========= الاستبيان =========
     const survey = {
       title: "قيّم عاداتك",
       questions: [
@@ -602,7 +617,6 @@
       ]
     };
 
-    // ========= الكويز =========
     const quiz = {
       title: "شنو تعرف عن كفاءة الطاقة",
       questions: [
@@ -645,7 +659,7 @@
           wrongFeedback: "ملاحظه : الكفاءة تقيس شكثر أداء يعطي الجهاز مقابل الطاقة، مو بس رقم الواط."
         },
         {
-          q: "٥-شنو.اكثر واجهة في المبنى اللي يُفضَّل تقليل استخدام الزجاج فيها لتخفيف دخول الحرارة؟",
+          q: "٥-شنو.اكثر واجهة في المبنى اللي يُفضَّل تقليل استخدام الزجاج فيها لتخفيف دخول الحرارة؟",
           options: ["الشمالية","⁠الجنوبية","⁠الشرقية","⁠الغربية"],
           correct: 1,
           correctFeedback: "صح 👏🏻 ، الواجهة الجنوبية تتعرّض للشمس بشكل مباشر، وزيادة الزجاج فيها ترفع دخول الحرارة.",
@@ -727,7 +741,6 @@
       backdrop.setAttribute("aria-hidden", "false");
       btnClose.focus();
 
-      // منع سكرول الصفحة خلف المودال على الموبايل
       document.body.style.overflow = "hidden";
     }
 
@@ -735,7 +748,6 @@
       backdrop.classList.remove("open");
       backdrop.setAttribute("aria-hidden", "true");
       active = null;
-
       document.body.style.overflow = "";
     }
 
